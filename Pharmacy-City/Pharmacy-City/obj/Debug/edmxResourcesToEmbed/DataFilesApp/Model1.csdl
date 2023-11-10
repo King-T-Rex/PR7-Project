@@ -1,0 +1,126 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="PharmacyCityModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="PharmacyCityEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Medication" EntityType="PharmacyCityModel.Medication" />
+    <EntitySet Name="Pharmacy" EntityType="PharmacyCityModel.Pharmacy" />
+    <EntitySet Name="Role" EntityType="PharmacyCityModel.Role" />
+    <EntitySet Name="sysdiagrams" EntityType="PharmacyCityModel.sysdiagrams" />
+    <EntitySet Name="User" EntityType="PharmacyCityModel.User" />
+    <EntitySet Name="AvailabilityPhar" EntityType="PharmacyCityModel.AvailabilityPhar" />
+    <AssociationSet Name="FK__Availabil__IDMed__4316F928" Association="PharmacyCityModel.FK__Availabil__IDMed__4316F928">
+      <End Role="Medication" EntitySet="Medication" />
+      <End Role="AvailabilityPhar" EntitySet="AvailabilityPhar" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Availabil__IDPha__4222D4EF" Association="PharmacyCityModel.FK__Availabil__IDPha__4222D4EF">
+      <End Role="Pharmacy" EntitySet="Pharmacy" />
+      <End Role="AvailabilityPhar" EntitySet="AvailabilityPhar" />
+    </AssociationSet>
+    <AssociationSet Name="FK_User_Role" Association="PharmacyCityModel.FK_User_Role">
+      <End Role="Role" EntitySet="Role" />
+      <End Role="User" EntitySet="User" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Medication">
+    <Key>
+      <PropertyRef Name="IDMedication" />
+    </Key>
+    <Property Name="IDMedication" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="NameMedic" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="GroupMedic" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="Dosage" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="ExpirationDate" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="AvailabilityPhar" Relationship="PharmacyCityModel.FK__Availabil__IDMed__4316F928" FromRole="Medication" ToRole="AvailabilityPhar" />
+  </EntityType>
+  <EntityType Name="Pharmacy">
+    <Key>
+      <PropertyRef Name="IDPharmacy" />
+    </Key>
+    <Property Name="IDPharmacy" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Title" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="AddressPhar" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="StartWork" Type="Int32" Nullable="false" />
+    <Property Name="EndWork" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="AvailabilityPhar" Relationship="PharmacyCityModel.FK__Availabil__IDPha__4222D4EF" FromRole="Pharmacy" ToRole="AvailabilityPhar" />
+  </EntityType>
+  <EntityType Name="Role">
+    <Key>
+      <PropertyRef Name="IDRole" />
+    </Key>
+    <Property Name="IDRole" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Role1" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="User" Relationship="PharmacyCityModel.FK_User_Role" FromRole="Role" ToRole="User" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="Login" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="Password" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="Familia" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="IDRole" Type="Int32" Nullable="false" />
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="Role" Relationship="PharmacyCityModel.FK_User_Role" FromRole="User" ToRole="Role" />
+  </EntityType>
+  <EntityType Name="AvailabilityPhar">
+    <Key>
+      <PropertyRef Name="IDPharmacy" />
+      <PropertyRef Name="IDMedication" />
+      <PropertyRef Name="ReleaseDate" />
+      <PropertyRef Name="Quantity" />
+      <PropertyRef Name="Price" />
+    </Key>
+    <Property Name="IDPharmacy" Type="Int32" Nullable="false" />
+    <Property Name="IDMedication" Type="Int32" Nullable="false" />
+    <Property Name="ReleaseDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Quantity" Type="Int32" Nullable="false" />
+    <Property Name="Price" Type="Double" Nullable="false" />
+    <NavigationProperty Name="Medication" Relationship="PharmacyCityModel.FK__Availabil__IDMed__4316F928" FromRole="AvailabilityPhar" ToRole="Medication" />
+    <NavigationProperty Name="Pharmacy" Relationship="PharmacyCityModel.FK__Availabil__IDPha__4222D4EF" FromRole="AvailabilityPhar" ToRole="Pharmacy" />
+  </EntityType>
+  <Association Name="FK__Availabil__IDMed__4316F928">
+    <End Type="PharmacyCityModel.Medication" Role="Medication" Multiplicity="1" />
+    <End Type="PharmacyCityModel.AvailabilityPhar" Role="AvailabilityPhar" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Medication">
+        <PropertyRef Name="IDMedication" />
+      </Principal>
+      <Dependent Role="AvailabilityPhar">
+        <PropertyRef Name="IDMedication" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Availabil__IDPha__4222D4EF">
+    <End Type="PharmacyCityModel.Pharmacy" Role="Pharmacy" Multiplicity="1" />
+    <End Type="PharmacyCityModel.AvailabilityPhar" Role="AvailabilityPhar" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Pharmacy">
+        <PropertyRef Name="IDPharmacy" />
+      </Principal>
+      <Dependent Role="AvailabilityPhar">
+        <PropertyRef Name="IDPharmacy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_User_Role">
+    <End Type="PharmacyCityModel.Role" Role="Role" Multiplicity="1" />
+    <End Type="PharmacyCityModel.User" Role="User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Role">
+        <PropertyRef Name="IDRole" />
+      </Principal>
+      <Dependent Role="User">
+        <PropertyRef Name="IDRole" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

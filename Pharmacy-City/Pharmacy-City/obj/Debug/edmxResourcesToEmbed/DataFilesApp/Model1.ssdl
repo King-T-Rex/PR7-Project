@@ -1,0 +1,130 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Хранилище PharmacyCityModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <!--Ошибки, обнаруженные при создании:
+предупреждение 6002: В таблице или представлении "PharmacyCity.dbo.AvailabilityPhar" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
+  <EntityType Name="AvailabilityPhar">
+    <Key>
+      <PropertyRef Name="IDPharmacy" />
+      <PropertyRef Name="IDMedication" />
+      <PropertyRef Name="ReleaseDate" />
+      <PropertyRef Name="Quantity" />
+      <PropertyRef Name="Price" />
+    </Key>
+    <Property Name="IDPharmacy" Type="int" Nullable="false" />
+    <Property Name="IDMedication" Type="int" Nullable="false" />
+    <Property Name="ReleaseDate" Type="date" Nullable="false" />
+    <Property Name="Quantity" Type="int" Nullable="false" />
+    <Property Name="Price" Type="float" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Medication">
+    <Key>
+      <PropertyRef Name="IDMedication" />
+    </Key>
+    <Property Name="IDMedication" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="NameMedic" Type="nvarchar" MaxLength="250" Nullable="false" />
+    <Property Name="GroupMedic" Type="nvarchar" MaxLength="250" Nullable="false" />
+    <Property Name="Dosage" Type="nvarchar" MaxLength="250" Nullable="false" />
+    <Property Name="ExpirationDate" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Pharmacy">
+    <Key>
+      <PropertyRef Name="IDPharmacy" />
+    </Key>
+    <Property Name="IDPharmacy" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Title" Type="nvarchar" MaxLength="250" Nullable="false" />
+    <Property Name="AddressPhar" Type="nvarchar" MaxLength="250" Nullable="false" />
+    <Property Name="StartWork" Type="int" Nullable="false" />
+    <Property Name="EndWork" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Role">
+    <Key>
+      <PropertyRef Name="IDRole" />
+    </Key>
+    <Property Name="IDRole" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Role" Type="nvarchar" MaxLength="250" Nullable="false" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="Login" Type="nvarchar" MaxLength="250" Nullable="false" />
+    <Property Name="Password" Type="nvarchar" MaxLength="250" Nullable="false" />
+    <Property Name="Familia" Type="nvarchar" MaxLength="250" Nullable="false" />
+    <Property Name="IDRole" Type="int" Nullable="false" />
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+  </EntityType>
+  <Association Name="FK__Availabil__IDMed__4316F928">
+    <End Role="Medication" Type="Self.Medication" Multiplicity="1" />
+    <End Role="AvailabilityPhar" Type="Self.AvailabilityPhar" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Medication">
+        <PropertyRef Name="IDMedication" />
+      </Principal>
+      <Dependent Role="AvailabilityPhar">
+        <PropertyRef Name="IDMedication" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Availabil__IDPha__4222D4EF">
+    <End Role="Pharmacy" Type="Self.Pharmacy" Multiplicity="1" />
+    <End Role="AvailabilityPhar" Type="Self.AvailabilityPhar" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Pharmacy">
+        <PropertyRef Name="IDPharmacy" />
+      </Principal>
+      <Dependent Role="AvailabilityPhar">
+        <PropertyRef Name="IDPharmacy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_User_Role">
+    <End Role="Role" Type="Self.Role" Multiplicity="1" />
+    <End Role="User" Type="Self.User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Role">
+        <PropertyRef Name="IDRole" />
+      </Principal>
+      <Dependent Role="User">
+        <PropertyRef Name="IDRole" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Хранилище PharmacyCityModelContainer">
+    <EntitySet Name="Medication" EntityType="Self.Medication" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Pharmacy" EntityType="Self.Pharmacy" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AvailabilityPhar" EntityType="Self.AvailabilityPhar" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [AvailabilityPhar].[IDPharmacy] AS [IDPharmacy], 
+    [AvailabilityPhar].[IDMedication] AS [IDMedication], 
+    [AvailabilityPhar].[ReleaseDate] AS [ReleaseDate], 
+    [AvailabilityPhar].[Quantity] AS [Quantity], 
+    [AvailabilityPhar].[Price] AS [Price]
+    FROM [dbo].[AvailabilityPhar] AS [AvailabilityPhar]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK__Availabil__IDMed__4316F928" Association="Self.FK__Availabil__IDMed__4316F928">
+      <End Role="Medication" EntitySet="Medication" />
+      <End Role="AvailabilityPhar" EntitySet="AvailabilityPhar" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Availabil__IDPha__4222D4EF" Association="Self.FK__Availabil__IDPha__4222D4EF">
+      <End Role="Pharmacy" EntitySet="Pharmacy" />
+      <End Role="AvailabilityPhar" EntitySet="AvailabilityPhar" />
+    </AssociationSet>
+    <AssociationSet Name="FK_User_Role" Association="Self.FK_User_Role">
+      <End Role="Role" EntitySet="Role" />
+      <End Role="User" EntitySet="User" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

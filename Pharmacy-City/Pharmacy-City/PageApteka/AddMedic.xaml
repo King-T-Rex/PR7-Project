@@ -1,0 +1,39 @@
+﻿<Page x:Class="Pharmacy_City.PageApteka.AddMedic"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Pharmacy_City.PageApteka"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="AddMedic">
+
+    <Grid>
+        <Button Content="Назад" Name="BtnBack" Click="BtnBack_Click" Style="{StaticResource BtnTransparent}"/>
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Width="150" Text="Введите название:"/>
+                <TextBox Name="TxbTitleMedic"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Width="150" Text="Введите группу:"/>
+                <TextBox Name="TxbGroup"/>
+            </StackPanel>
+
+
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Width="150" Text="Введите дозировку:"/>
+                <TextBox Name="TxbDos"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Width="150" Text="Введите срок годности:"/>
+                <TextBox Name="TxbSrok"/>
+            </StackPanel>
+
+            <Button Content="Создать препарат" Name="BtnAddMedic" Click="BtnAddMedic_Click" Style="{StaticResource AcceptButton}"/>
+        </StackPanel>
+    </Grid>
+</Page>
